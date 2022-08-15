@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace FinancialTrackerMVC.Models.Users
 {
     public class UsersUpdate
