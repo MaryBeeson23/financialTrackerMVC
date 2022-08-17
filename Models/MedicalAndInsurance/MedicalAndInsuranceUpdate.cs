@@ -1,8 +1,9 @@
+using FinancialTrackerMVC.Models.Bills;
 namespace FinancialTrackerMVC.Models.MedicalAndInsurance
 {
-    public class MedicalAndInsuranceListItem
+    public class MedicalAndInsuranceUpdate
     {
-        public string debtorName { get; set; }
+        public List<BillsDetail> debtorName { get; set; }
         public int amountDue { get; set; }
         public DateTime dueDate { get; set; }
     }

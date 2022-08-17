@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FinancialTrackerMVC.Models.CreditCards;
 
 namespace FinancialTrackerMVC.Services.CreditCardsService
 {
     public interface ICreditCards
     {
-        
+        Task<bool> CreateCreditCardsAsync(CreditCardsCreate model);
+        Task<IEnumerable<CreditCardsDetail>> GetAllCreditCardsAsync();
+        Task<CreditCardsDetail> GetCreditCardsByIdAsync(int id);
+        Task<bool> UpdateCreditCardsAsync(int id, CreditCardsUpdate request);
+        Task<bool> DeleteCreditCardsAsync(int id);
     }
 }

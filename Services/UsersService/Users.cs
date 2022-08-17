@@ -1,6 +1,5 @@
 using FinancialTrackerMVC.Models.Users;
 using FinancialTrackerMVC.Data;
-using FinancialTrackerMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 

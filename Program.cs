@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FinancialTrackerMVC.Data;
 using FinancialTrackerMVC.Services.UsersService;
+using FinancialTrackerMVC.Services.SubscriptionsService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<FinancialTrackerDbContext>(options => options.UseS
 ));
 
 builder.Services.AddScoped<IUsers, Users>();
+builder.Services.AddScoped<ISubscriptions, Subscriptions>();
 
 var app = builder.Build();
 
