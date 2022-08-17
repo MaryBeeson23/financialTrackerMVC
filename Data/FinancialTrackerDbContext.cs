@@ -7,6 +7,9 @@ namespace FinancialTrackerMVC.Data
     {
         public FinancialTrackerDbContext(DbContextOptions<FinancialTrackerDbContext> options) : base(options) {}
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<BillsEntity> Bills { get; set; }
+        public DbSet<SavingsEntity> Savings { get; set; }
         public DbSet<SubscriptionsEntity> Subscriptions { get; set; }
+        public DbSet<CreditCardsEntity> CreditCards { get; set; }
     }
 }

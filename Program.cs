@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using FinancialTrackerMVC.Data;
 using FinancialTrackerMVC.Services.UsersService;
+using FinancialTrackerMVC.Services.BillsService;
+using FinancialTrackerMVC.Services.SavingsService;
 using FinancialTrackerMVC.Services.SubscriptionsService;
+using FinancialTrackerMVC.Services.CreditCardsService;
+using FinancialTrackerMVC.Services.MedicalAndInsuranceService;
+using FinancialTrackerMVC.Services.RentAndUtilitiesService;
+using FinancialTrackerMVC.Services.MiscService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +19,15 @@ builder.Services.AddDbContext<FinancialTrackerDbContext>(options => options.UseS
 ));
 
 builder.Services.AddScoped<IUsers, Users>();
+builder.Services.AddScoped<IBills, Bills>();
+builder.Services.AddScoped<ISavings, Savings>();
 builder.Services.AddScoped<ISubscriptions, Subscriptions>();
+builder.Services.AddScoped<ICreditCards, CreditCards>();
+//builder.Services.AddScoped<IMedicalAndInsurance, MedicalAndInsurance>();
+//builder.Services.AddScoped<IRentAndUtilities, RentAndUtilities>();
+//builder.Services.AddScoped<IMisc, Misc>();
+
+
 
 var app = builder.Build();
 
