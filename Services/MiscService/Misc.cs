@@ -17,7 +17,7 @@ namespace FinancialTrackerMVC.Services.MiscService
         {
             var misc = new MiscEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
+                MiscDebtorType = model.DebtorType,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,7 +33,7 @@ namespace FinancialTrackerMVC.Services.MiscService
                 s => new MiscDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.MiscDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -49,7 +49,7 @@ namespace FinancialTrackerMVC.Services.MiscService
                 s => new MiscDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.MiscDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -68,7 +68,7 @@ namespace FinancialTrackerMVC.Services.MiscService
             {
                 return false;
             }
-            //misc.debtorName = request.debtorName.SubDebtor;
+            misc.MiscDebtorType = request.DebtorType;
             misc.amountDue = request.amountDue;
             misc.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();

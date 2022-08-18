@@ -17,7 +17,7 @@ namespace FinancialTrackerMVC.Services.CreditCardsService
         {
             var cred = new CreditCardsEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
+                CCDebtorType = model.DebtorType,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,7 +33,7 @@ namespace FinancialTrackerMVC.Services.CreditCardsService
                 s => new CreditCardsDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.CCDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -49,7 +49,7 @@ namespace FinancialTrackerMVC.Services.CreditCardsService
                 s => new CreditCardsDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.CCDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -68,7 +68,7 @@ namespace FinancialTrackerMVC.Services.CreditCardsService
             {
                 return false;
             }
-            //cred.debtorName = request.debtorName.SubDebtor;
+            cred.CCDebtorType = request.DebtorType;
             cred.amountDue = request.amountDue;
             cred.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();

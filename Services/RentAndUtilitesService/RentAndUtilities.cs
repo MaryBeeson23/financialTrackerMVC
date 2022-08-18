@@ -17,7 +17,7 @@ namespace FinancialTrackerMVC.Services.RentAndUtilitiesService
         {
             var renu = new RentAndUtilitiesEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
+                RUDebtorType = model.DebtorType,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,7 +33,7 @@ namespace FinancialTrackerMVC.Services.RentAndUtilitiesService
                 s => new RentAndUtilitiesDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.RUDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -49,7 +49,7 @@ namespace FinancialTrackerMVC.Services.RentAndUtilitiesService
                 s => new RentAndUtilitiesDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.RUDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -68,7 +68,7 @@ namespace FinancialTrackerMVC.Services.RentAndUtilitiesService
             {
                 return false;
             }
-            //renu.debtorName = request.debtorName.SubDebtor;
+            renu.RUDebtorType = request.DebtorType;
             renu.amountDue = request.amountDue;
             renu.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();
@@ -85,6 +85,5 @@ namespace FinancialTrackerMVC.Services.RentAndUtilitiesService
             _dbContext.RentAndUtilities.Remove(renu);
             return await _dbContext.SaveChangesAsync() == 1;
         }
-        
     }
 }

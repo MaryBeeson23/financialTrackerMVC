@@ -4,7 +4,7 @@ namespace FinancialTrackerMVC.Models.Misc
 {
     public class MiscCreate
     {
-        public List<BillsDetail> debtorName { get; set; }
+        public string DebtorType { get; set; }
         public int amountDue { get; set; }
         public DateTime dueDate { get; set; }
     }

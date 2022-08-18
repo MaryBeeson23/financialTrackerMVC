@@ -1,7 +1,7 @@
 using FinancialTrackerMVC.Data;
 using FinancialTrackerMVC.Data.Entities;
 using FinancialTrackerMVC.Models.Subscriptions;
-using FinancialTrackerMVC.Models.Bills;
+// using FinancialTrackerMVC.Models.Bills;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancialTrackerMVC.Services.SubscriptionsService

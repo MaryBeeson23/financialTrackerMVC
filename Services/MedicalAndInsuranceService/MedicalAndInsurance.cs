@@ -17,7 +17,7 @@ namespace FinancialTrackerMVC.Services.MedicalAndInsuranceService
         {
             var medi = new MedicalAndInsuranceEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
+                MIDebtorType = model.DebtorType,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,7 +33,7 @@ namespace FinancialTrackerMVC.Services.MedicalAndInsuranceService
                 s => new MedicalAndInsuranceDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.MIDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -49,7 +49,7 @@ namespace FinancialTrackerMVC.Services.MedicalAndInsuranceService
                 s => new MedicalAndInsuranceDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.MIDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -68,7 +68,7 @@ namespace FinancialTrackerMVC.Services.MedicalAndInsuranceService
             {
                 return false;
             }
-            //medi.debtorName = request.debtorName.SubDebtor;
+            medi.MIDebtorType = request.DebtorType;
             medi.amountDue = request.amountDue;
             medi.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();
