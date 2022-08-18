@@ -6,11 +6,11 @@ namespace FinancialTrackerMVC.Data.Entities
     {
         public BillsEntity()
         {
-            CCDebtor = new List<CreditCardsEntity>();
-            MIDebtor = new List<MedicalAndInsuranceEntity>();
-            MiscDebtor = new List<MiscEntity>();
-            RUDebtor = new List<RentAndUtilitiesEntity>();
-            SubDebtor = new List<SubscriptionsEntity>();
+            CCDebtors = new List<CreditCardsEntity>();
+            MIDebtors = new List<MedicalAndInsuranceEntity>();
+            MiscDebtors = new List<MiscEntity>();
+            RUDebtors = new List<RentAndUtilitiesEntity>();
+            SubDebtors = new List<SubscriptionsEntity>();
         }
 
         [Key]
@@ -20,11 +20,11 @@ namespace FinancialTrackerMVC.Data.Entities
         [Required]
         public string debtorName { get; set; }
 
-        public virtual IEnumberable<CreditCardsEntity> CCDebtor { get; set; }
-        public virtual IEnumberable<MedicalAndInsuranceEntity> MIDebtor { get; set; }
-        public virtual IEnumberable<MiscEntity> MiscDebtor { get; set; }
-        public virtual IEnumberable<RentAndUtilitiesEntity> RUDebtor { get; set; }
-        public virtual IEnumberable<SubscriptionsEntity> SubDebtor { get; set; }
+        public virtual IEnumerable<CreditCardsEntity> CCDebtors { get; set; }
+        public virtual IEnumerable<MedicalAndInsuranceEntity> MIDebtors { get; set; }
+        public virtual IEnumerable<MiscEntity> MiscDebtors { get; set; }
+        public virtual IEnumerable<RentAndUtilitiesEntity> RUDebtors { get; set; }
+        public virtual IEnumerable<SubscriptionsEntity> SubDebtors { get; set; }
     
     }
 }

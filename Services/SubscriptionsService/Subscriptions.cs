@@ -1,6 +1,7 @@
 using FinancialTrackerMVC.Data;
 using FinancialTrackerMVC.Data.Entities;
 using FinancialTrackerMVC.Models.Subscriptions;
+using FinancialTrackerMVC.Models.Bills;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancialTrackerMVC.Services.SubscriptionsService
@@ -17,7 +18,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
         {
             var subs = new SubscriptionsEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
+                SubDebtorType = model.DebtorType,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,7 +34,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
                 s => new SubscriptionsDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.SubDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -49,7 +50,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
                 s => new SubscriptionsDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
+                    DebtorType = s.SubDebtorType,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -68,7 +69,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
             {
                 return false;
             }
-            //subs.debtorName = request.debtorName.SubDebtor;
+            subs.SubDebtorType = request.DebtorType;
             subs.amountDue = request.amountDue;
             subs.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();

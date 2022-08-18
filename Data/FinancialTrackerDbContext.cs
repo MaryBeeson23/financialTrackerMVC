@@ -11,5 +11,8 @@ namespace FinancialTrackerMVC.Data
         public DbSet<SavingsEntity> Savings { get; set; }
         public DbSet<SubscriptionsEntity> Subscriptions { get; set; }
         public DbSet<CreditCardsEntity> CreditCards { get; set; }
+        public DbSet<RentAndUtilitiesEntity> RentAndUtilities { get; set; }
+        public DbSet<MiscEntity> Misc { get; set; }
+        public DbSet<MedicalAndInsuranceEntity> MedicalAndInsurance { get; set; }
     }
 }

@@ -1,6 +1,11 @@
 using FinancialTrackerMVC.Data;
 using FinancialTrackerMVC.Data.Entities;
 using FinancialTrackerMVC.Models.Bills;
+using FinancialTrackerMVC.Models.CreditCards;
+using FinancialTrackerMVC.Models.MedicalAndInsurance;
+using FinancialTrackerMVC.Models.Misc;
+using FinancialTrackerMVC.Models.RentAndUtilities;
+using FinancialTrackerMVC.Models.Subscriptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinancialTrackerMVC.Services.BillsService
@@ -17,8 +22,6 @@ namespace FinancialTrackerMVC.Services.BillsService
         {
             var bill = new BillsEntity
             {
-                //debtorName = model.debtorName.Subdebtor,
-                billType = model.billType,
                 debtorName = model.debtorName
             };
             _dbContext.Bills.Add(bill);
@@ -33,8 +36,6 @@ namespace FinancialTrackerMVC.Services.BillsService
                 s => new BillsDetail
                 {
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
-                    billType = s.billType,
                     debtorName = s.debtorName
                 }
             )
@@ -44,20 +45,62 @@ namespace FinancialTrackerMVC.Services.BillsService
 
         public async Task<BillsDetail> GetBillsByIdAsync(int id)
         {
-            var bill = await _dbContext.Bills
+            var billFound = await _dbContext.Bills.FindAsync(id);
+            var subs = billFound.SubDebtors
             .Select(
-                s => new BillsDetail
-                {
+                s => new SubscriptionsDetail{
                     id = s.id,
-                    //debtorName = s.debtorName.SubDebtor,
-                    billType = s.billType,
-                    debtorName = s.debtorName
+                    DebtorType = s.SubDebtorType,
+                    amountDue = s.amountDue,
+                    dueDate = s.dueDate
                 }
-            )
-            .Where(
-                s => s.id == id
-            )
-            .FirstOrDefaultAsync();
+            );
+            var cred = billFound.CCDebtors
+            .Select(
+                c => new CreditCardsDetail{
+                    id = c.id,
+                    payoffAmount = c.payoffAmount,
+                    DebtorType = c.CCDebtorType,
+                    amountDue = c.amountDue,
+                    dueDate = c.dueDate
+                }
+            );
+            var medi = billFound.MIDebtors
+            .Select(
+                mi => new MedicalAndInsuranceDetail{
+                    id = mi.id,
+                    DebtorType = mi.MIDebtorType,
+                    amountDue = mi.amountDue,
+                    dueDate = mi.dueDate
+                }
+            );
+            var renu = billFound.RUDebtors
+            .Select(
+                ru => new RentAndUtilitiesDetail{
+                    id = ru.id,
+                    DebtorType = ru.RUDebtorType,
+                    amountDue = ru.amountDue,
+                    dueDate = ru.dueDate
+                }
+            );
+            var misc = billFound.MiscDebtors
+            .Select(
+                m => new MiscDetail{
+                    id = m.id,
+                    DebtorType = m.MiscDebtorType,
+                    amountDue = m.amountDue,
+                    dueDate = m.dueDate
+                }
+            );
+            var bill = new BillsDetail{
+                id = billFound.id,
+                debtorName = billFound.debtorName,
+                SubDebtorType = subs.ToList(),
+                CCDebtorType = cred.ToList(),
+                MIDebtorType = medi.ToList(),
+                RUDebtorType = renu.ToList(),
+                MiscDebtorDype = misc.ToList(),
+            };
             return bill;
         }
 
@@ -68,8 +111,6 @@ namespace FinancialTrackerMVC.Services.BillsService
             {
                 return false;
             }
-            //bill.debtorName = request.debtorName.SubDebtor;
-            bill.billType = request.billType;
             bill.debtorName = request.debtorName;
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;

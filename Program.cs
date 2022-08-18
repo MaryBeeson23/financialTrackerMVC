@@ -23,9 +23,9 @@ builder.Services.AddScoped<IBills, Bills>();
 builder.Services.AddScoped<ISavings, Savings>();
 builder.Services.AddScoped<ISubscriptions, Subscriptions>();
 builder.Services.AddScoped<ICreditCards, CreditCards>();
-//builder.Services.AddScoped<IMedicalAndInsurance, MedicalAndInsurance>();
-//builder.Services.AddScoped<IRentAndUtilities, RentAndUtilities>();
-//builder.Services.AddScoped<IMisc, Misc>();
+builder.Services.AddScoped<IMedicalAndInsurance, MedicalAndInsurance>();
+builder.Services.AddScoped<IRentAndUtilities, RentAndUtilities>();
+builder.Services.AddScoped<IMisc, Misc>();
 
 
 
