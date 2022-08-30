@@ -4,7 +4,7 @@ namespace FinancialTrackerMVC.Models.RentAndUtilities
 {
     public class RentAndUtilitiesCreate
     {
-        public string DebtorType { get; set; }
+        public int DebtorType { get; set; }
         public int amountDue { get; set; }
         public DateTime dueDate { get; set; } 
     }

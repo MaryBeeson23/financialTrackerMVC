@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using FinancialTrackerMVC.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace FinancialTrackerMVC.Data
 {
-    public class FinancialTrackerDbContext : DbContext
+    public class FinancialTrackerDbContext : IdentityDbContext
     {
         public FinancialTrackerDbContext(DbContextOptions<FinancialTrackerDbContext> options) : base(options) {}
-        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserEntity> ApplicationUsers { get; set; }
         public DbSet<BillsEntity> Bills { get; set; }
         public DbSet<SavingsEntity> Savings { get; set; }
         public DbSet<SubscriptionsEntity> Subscriptions { get; set; }

@@ -9,7 +9,7 @@ namespace FinancialTrackerMVC.Data.Entities
         public int id { get; set; }
         [Required]
         [ForeignKey(nameof(CCDebtor))]
-        public string CCDebtorType { get; set; }
+        public int CCDebtorType { get; set; }
         [Required]
         public int payoffAmount { get; set; }
         [Required]

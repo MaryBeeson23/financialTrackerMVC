@@ -1,102 +1,142 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using FinancialTrackerMVC.Services.UsersService;
 using FinancialTrackerMVC.Models.Users;
-// using FinancialTrackerMVC.Services.Token;
-// using FinancialTrackerMVC.Models.Token;
+using FinancialTrackerMVC.Services.UsersService;
 
 namespace FinancialTrackerMVC.Controllers
 {
-    public class UserController : ControllerBase
+    public class UsersController : Controller
     {
-        private readonly IUsers _userService;
-        // private readonly ITokenService _tokenService;
-        public UserController(IUsers userService 
-        //ITokenService tokenService
-        )
+        private readonly IUsers _usersService;
+        public UsersController(IUsers usersService)
         {
-            _userService = userService;
-            // _tokenService = tokenService;
+            _usersService = usersService;
         }
 
-        // [HttpPost("Token")]
-        // [ProducesResponseType(typeof(TokenResponse), 200)]
-        // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        // public async Task<IActionResult> Token([FromBody] TokenRequest request) {
-        //     if (!ModelState.IsValid) {
-        //         return BadRequest(ModelState);
-        //     }
-        //     var tokenResponse = await _tokenService.GetTokenAsync(request);
-        //     if (tokenResponse is null) {
-        //         return BadRequest("Invalid username or password.");
-        //     }
-        //     return Ok(tokenResponse);
-        // }
-
-        [HttpPost("Register")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RegisterUserAsync([FromBody] UsersRegister model)
+        public async Task<IActionResult> Index()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var registerResult = await _userService.RegisterUserAsync(model);
-            if (registerResult)
-            {
-                return Ok("The user has been registered successfully.");
-            }
-            return BadRequest("The user could not be registered.");
-        }
-        
-        [HttpGet]
-        [ProducesResponseType(typeof(UsersDetail), 200)]
-        public async Task<IActionResult> GetAllUsersAsync() 
-        {
-            return Ok(await _userService.GetAllUsersAsync());
+            var users = await _usersService.GetAllUsers();
+            return View(users);
         }
 
-        [HttpGet("{id:int}")]
-        [ProducesResponseType(typeof(UsersDetail), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetUserByIdAsync([FromRoute] int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var users = await _usersService.GetUserById(id);
 
-            if (user is null)
+            if (users == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return View(users);
         }
 
-        [Authorize]
-        [HttpPut("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateUserAsync([FromRoute] int id, [FromBody] UsersUpdate request)
+        public async Task<IActionResult> Register()
+        {
+            var users = await _usersService.GetAllUsers();
+
+            IEnumerable<UsersRegister> model = users
+                .Select(u => new UsersRegister()
+            {
+                fullName = u.fullName,
+                email = u.Email
+            });
+
+            return View(model);
+        }
+    
+
+        [HttpPost]
+        // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(UsersRegister model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                TempData["ErrorMsg"] = "Model State is Invalid";
+                return View(ModelState);
             }
-                return await _userService.UpdateUserAsync(id, request) ?
-                Ok("The user has been updated successfully.") : 
-                BadRequest("Sorry, the user could not be updated.");
+
+            bool wasReg = await _usersService.RegisterUser(model);
+
+            if (wasReg)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            TempData["ErrorMsg"] = "Unable to save to the database. Please try again later.";
+
+            return View(model);
         }
 
-        [Authorize]
-        [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteUserAsync([FromRoute] int id)
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
         {
-            return await _userService.DeleteUserAsync(id) ?
-            Ok($"The user with ID {id} has been deleted successfully.") :
-            BadRequest($"Sorry, the user with ID {id} could not be deleted.");
+            var users = await _usersService.GetAllUsers();
+
+            IEnumerable<UsersDetail> user = users
+                .Select(u => new UsersDetail()
+                {
+                    Id = u.Id,
+                    fullName = u.fullName,
+                    Email = u.Email,
+                    birthday = u.birthday,
+                    income = u.income
+                });
+
+            UsersDetail userId = await _usersService.GetUserById(id);
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+
+            var usersDetail = new UsersDetail();
+
+            return View(usersDetail);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(int id, UsersUpdate model)
+        {
+            if (id != model.id || !ModelState.IsValid)
+            {
+                return View(ModelState);
+            }
+
+            bool wasUpdated = await _usersService.UpdateUser(id, model);
+
+            if (wasUpdated)
+            {
+                return RedirectToAction("Details", new { id = model.id });
+            }
+
+            ViewData["ErrorMsg"] = "Unable to save to the database. Please try again later.";
+
+            return View(model);
+        }
+
+        // [HttpDelete]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var users = await _usersService.GetUserById(id);
+
+        //     if (users == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return View(users);
+        // }
+
+        [HttpDelete]
+        // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id, UsersDetail model)
+        {
+            if (await _usersService.DeleteUser(model.Id))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return BadRequest();
         }
     }
 }

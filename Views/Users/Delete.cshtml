@@ -1,0 +1,48 @@
+@model FinancialTrackerMVC.Models.Users.UsersDetail
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>User Delete</h1>
+
+<div>
+    <h3>User : @Model.fullName</h3>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.fullName)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.fullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.birthday)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.birthday)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.income)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.income)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

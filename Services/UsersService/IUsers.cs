@@ -4,11 +4,11 @@ namespace FinancialTrackerMVC.Services.UsersService
 {
     public interface IUsers
     {
-        Task<bool> RegisterUserAsync(UsersRegister model);
-        Task<IEnumerable<UsersDetail>> GetAllUsersAsync();
-        Task<UsersDetail> GetUserByIdAsync(int id);
-        Task<UsersDetail> GetUserByNameAsync(string fullName);
-        Task<bool> UpdateUserAsync(int id, UsersUpdate request);
-        Task<bool> DeleteUserAsync(int id);
+        Task<bool> RegisterUser(UsersRegister model);
+        Task<IEnumerable<UsersDetail>> GetAllUsers();
+        Task<UsersDetail> GetUserById(int id);
+        Task<UsersDetail> GetUserByName(string fullName);
+        Task<bool> UpdateUser(int id, UsersUpdate request);
+        Task<bool> DeleteUser(string id);
     }
 }
