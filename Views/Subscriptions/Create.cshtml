@@ -1,0 +1,50 @@
+@model FinancialTrackerMVC.Models.Subscriptions.SubscriptionsCreate;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Subscription</h4>
+<hr/>
+<div class="row">
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="DebtorType" class="control-label"></label>
+            <input asp-for="DebtorType" class="form-control" />
+            <span asp-validation-for="DebtorType" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SubDebtor" class="control-label"></label>
+            <input asp-for="SubDebtor" class="form-control" />
+            <span asp-validation-for="SubDebtor" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="amountDue" class="control-label"></label>
+            <input asp-for="amountDue" class="form-control" />
+            <span asp-validation-for="amountDue" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="dueDate" class="control-label"></label>
+            <input asp-for="dueDate" class="form-control" />
+            <span asp-validation-for="dueDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create Subscription" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+</div>
+<div>
+    <a class="action-links" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<div>
+    
+</div>

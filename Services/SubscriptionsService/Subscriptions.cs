@@ -16,15 +16,20 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
 
         public async Task<bool> CreateSubscriptionAsync(SubscriptionsCreate model)
         {
-            var subs = new SubscriptionsEntity
+            if (model == null)
             {
-                SubDebtor = model.SubDebtor,
-                amountDue = model.amountDue,
-                dueDate = model.dueDate
-            };
-            _dbContext.Subscriptions.Add(subs);
-            var numberOfChanges = await _dbContext.SaveChangesAsync();
-            return numberOfChanges == 1;
+                return false;
+            }
+            _dbContext.Subscriptions.Add(new Data.Entities.SubscriptionsEntity
+            {
+                DebtorType = model.DebtorType,
+            });
+
+            if (await _dbContext.SaveChangesAsync() == 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<IEnumerable<SubscriptionsDetail>> GetAllSubscriptionsAsync()

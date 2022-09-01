@@ -1,0 +1,60 @@
+@model IEnumerable<FinancialTrackerMVC.Models.Subscriptions.SubscriptionsDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <h1 class="text-center">All Subscriptions</h1>
+
+    <p>
+        <a class="action-links btn btn-primary btn-secondary" asp-action="Create">Add New Subscription</a>
+    </p>
+
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DebtorType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubDebtor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.amountDue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dueDate)
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var subs in Model)
+            {
+                <tr>
+                    <td>
+            @Html.DisplayFor(modelItem => subs.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => subs.DebtorType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => subs.SubDebtor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => subs.amountDue)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => subs.dueDate)
+        </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = subs.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = subs.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = subs.id })
+                </td>
+                </tr>
+            }
+        </tbody>
+    </table>

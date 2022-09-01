@@ -1,15 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using FinancialTrackerMVC.Services.SubscriptionsService;
 using FinancialTrackerMVC.Models.Subscriptions;
 
 namespace FinancialTrackerMVC.Controllers
 {
-    public class SubscriptionsController : ControllerBase
+    public class SubscriptionsController : Controller
     {
         private readonly ISubscriptions _service;
         public SubscriptionsController(ISubscriptions subsService)
         {
             _service = subsService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var subs = await _service.GetAllSubscriptionsAsync();
+            return View(subs);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var subs = await _service.GetSubscriptionsByIdAsync(id);
+
+            if (subs == null)
+            {
+                return NotFound();
+            }
+
+            return View(subs);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var subs = await _service.GetAllSubscriptionsAsync();
+
+            IEnumerable<SelectListItem> subType = subs
+                .Select(s => new SelectListItem()
+                {
+                    Text = s.DebtorType,
+                    Value = s.SubDebtor.billType
+                });
+
+            SubscriptionsCreate model = new SubscriptionsCreate();
+
+            model.DebtorType = subType.ToString();
+
+            return View(model);
         }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -21,9 +57,9 @@ namespace FinancialTrackerMVC.Controllers
             }
 
             if (await _service.CreateSubscriptionAsync(model)) {
-                return Ok("Subscription bill has been created successfully.");
+                return Ok("Subscription sub has been created successfully.");
             }
-            return BadRequest("Sorry, subscription bill could not be created.");
+            return BadRequest("Sorry, subscription sub could not be created.");
         }
 
         [HttpGet]
@@ -54,7 +90,7 @@ namespace FinancialTrackerMVC.Controllers
             if (await _service.UpdateSubscriptionsAsync(id, model)) {
                 return Ok("Subscription ill has been updated successfully.");
             }
-            return BadRequest("Sorry, subscription bill could not be updated.");
+            return BadRequest("Sorry, subscription sub could not be updated.");
         }
 
         [HttpDelete("{id:int}")]
@@ -62,8 +98,8 @@ namespace FinancialTrackerMVC.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteSubscriptionsByIdAsync([FromRoute] int id) {
             return await _service.DeleteSubscriptionsAsync(id) ?
-            Ok($"Subscription bill with ID {id} has been deleted successfully.") :
-            BadRequest($"Sorry, subscription bill with ID {id} could not be deleted.");
+            Ok($"Subscription sub with ID {id} has been deleted successfully.") :
+            BadRequest($"Sorry, subscription sub with ID {id} could not be deleted.");
         }
     }
 }

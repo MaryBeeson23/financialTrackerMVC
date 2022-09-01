@@ -6,6 +6,7 @@ namespace FinancialTrackerMVC.Data.Entities
     public class SubscriptionsEntity
     {
         public int id { get; set; }
+        public string DebtorType { get; set; }
         [Required]
         public int amountDue { get; set; }
         [Required]
