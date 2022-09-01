@@ -4,10 +4,10 @@ using FinancialTrackerMVC.Services.UsersService;
 using FinancialTrackerMVC.Services.BillsService;
 using FinancialTrackerMVC.Services.SavingsService;
 using FinancialTrackerMVC.Services.SubscriptionsService;
-using FinancialTrackerMVC.Services.CreditCardsService;
-using FinancialTrackerMVC.Services.MedicalAndInsuranceService;
-using FinancialTrackerMVC.Services.RentAndUtilitiesService;
-using FinancialTrackerMVC.Services.MiscService;
+// using FinancialTrackerMVC.Services.CreditCardsService;
+// using FinancialTrackerMVC.Services.MedicalAndInsuranceService;
+// using FinancialTrackerMVC.Services.RentAndUtilitiesService;
+// using FinancialTrackerMVC.Services.MiscService;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,10 +24,10 @@ builder.Services.AddScoped<IUsers, Users>();
 builder.Services.AddScoped<IBills, Bills>();
 builder.Services.AddScoped<ISavings, Savings>();
 builder.Services.AddScoped<ISubscriptions, Subscriptions>();
-builder.Services.AddScoped<ICreditCards, CreditCards>();
-builder.Services.AddScoped<IMedicalAndInsurance, MedicalAndInsurance>();
-builder.Services.AddScoped<IRentAndUtilities, RentAndUtilities>();
-builder.Services.AddScoped<IMisc, Misc>();
+// builder.Services.AddScoped<ICreditCards, CreditCards>();
+// builder.Services.AddScoped<IMedicalAndInsurance, MedicalAndInsurance>();
+// builder.Services.AddScoped<IRentAndUtilities, RentAndUtilities>();
+// builder.Services.AddScoped<IMisc, Misc>();
 
 
 

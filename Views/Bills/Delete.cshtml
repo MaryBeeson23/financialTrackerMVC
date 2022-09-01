@@ -1,0 +1,36 @@
+@model FinancialTrackerMVC.Models.Bills.BillsDetail
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Bill Delete</h1>
+
+<div>
+    <h3>Bill : @Model.debtorName</h3>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.debtorName)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.debtorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubDebtorType)
+        </dt>
+        <dd class="col-cm-10">
+            @Html.DisplayFor(model => model.SubDebtorType)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
