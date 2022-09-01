@@ -23,7 +23,7 @@ namespace FinancialTrackerMVC.Data
             builder.Entity<BillsEntity>()
             .HasMany<SubscriptionsEntity>(b => b.SubDebtors)
             .WithOne(s => s.SubDebtor)
-            .HasForeignKey(bs => bs.dueDate);
+            .HasForeignKey(bs => bs.billId);
 
             builder.Entity<BillsEntity>()
             .HasData

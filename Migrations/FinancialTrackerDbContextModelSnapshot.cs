@@ -31,118 +31,34 @@ namespace FinancialTrackerMVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("billType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("debtorName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
                     b.ToTable("Bills");
-                });
 
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.CreditCardsEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("CCDebtorType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("amountDue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("payoffAmount")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("CCDebtorType");
-
-                    b.ToTable("CreditCards");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.MedicalAndInsuranceEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("MIDebtorType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("amountDue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("payoffAmount")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("MIDebtorType");
-
-                    b.ToTable("MedicalAndInsurance");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.MiscEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("MiscDebtorType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("amountDue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dueDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("MiscDebtorType");
-
-                    b.ToTable("Misc");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.RentAndUtilitiesEntity", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("RUDebtorType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("amountDue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dueDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("RUDebtorType");
-
-                    b.ToTable("RentAndUtilities");
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            billType = "Subdebtors",
+                            debtorName = "Netflix"
+                        },
+                        new
+                        {
+                            id = 2,
+                            billType = "Subdebtors",
+                            debtorName = "Youtube"
+                        },
+                        new
+                        {
+                            id = 3,
+                            billType = "Subdebtors",
+                            debtorName = "Hulu"
+                        });
                 });
 
             modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.SavingsEntity", b =>
@@ -166,13 +82,7 @@ namespace FinancialTrackerMVC.Migrations
 
             modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.SubscriptionsEntity", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("SubDebtorType")
+                    b.Property<int>("billId")
                         .HasColumnType("int");
 
                     b.Property<int>("amountDue")
@@ -181,9 +91,10 @@ namespace FinancialTrackerMVC.Migrations
                     b.Property<DateTime>("dueDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.Property<int>("id")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SubDebtorType");
+                    b.HasKey("billId");
 
                     b.ToTable("Subscriptions");
                 });
@@ -410,55 +321,11 @@ namespace FinancialTrackerMVC.Migrations
                     b.HasDiscriminator().HasValue("UserEntity");
                 });
 
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.CreditCardsEntity", b =>
-                {
-                    b.HasOne("FinancialTrackerMVC.Data.Entities.BillsEntity", "CCDebtor")
-                        .WithMany("CCDebtors")
-                        .HasForeignKey("CCDebtorType")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CCDebtor");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.MedicalAndInsuranceEntity", b =>
-                {
-                    b.HasOne("FinancialTrackerMVC.Data.Entities.BillsEntity", "MIDebtor")
-                        .WithMany("MIDebtors")
-                        .HasForeignKey("MIDebtorType")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MIDebtor");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.MiscEntity", b =>
-                {
-                    b.HasOne("FinancialTrackerMVC.Data.Entities.BillsEntity", "MiscDebtor")
-                        .WithMany("MiscDebtors")
-                        .HasForeignKey("MiscDebtorType")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MiscDebtor");
-                });
-
-            modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.RentAndUtilitiesEntity", b =>
-                {
-                    b.HasOne("FinancialTrackerMVC.Data.Entities.BillsEntity", "RUDebtor")
-                        .WithMany("RUDebtors")
-                        .HasForeignKey("RUDebtorType")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RUDebtor");
-                });
-
             modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.SubscriptionsEntity", b =>
                 {
                     b.HasOne("FinancialTrackerMVC.Data.Entities.BillsEntity", "SubDebtor")
                         .WithMany("SubDebtors")
-                        .HasForeignKey("SubDebtorType")
+                        .HasForeignKey("billId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -518,14 +385,6 @@ namespace FinancialTrackerMVC.Migrations
 
             modelBuilder.Entity("FinancialTrackerMVC.Data.Entities.BillsEntity", b =>
                 {
-                    b.Navigation("CCDebtors");
-
-                    b.Navigation("MIDebtors");
-
-                    b.Navigation("MiscDebtors");
-
-                    b.Navigation("RUDebtors");
-
                     b.Navigation("SubDebtors");
                 });
 #pragma warning restore 612, 618

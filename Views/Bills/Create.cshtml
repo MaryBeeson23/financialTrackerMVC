@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <label asp-for="id" class="control-label"></label>
-            @Html.DropDownListFor(model => model.id, (SelectList)ViewBag.SubDebtorType)
+            @Html.DropDownListFor(model => model.subBill, (SelectList)ViewBag.SubDebtorType)
             <input type="submit" value="submit"/>
             <h4>You Selected</h4>
             <b>Bill Type: </b>@ViewBag.SubDebtorType

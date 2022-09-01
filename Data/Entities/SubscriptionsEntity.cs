@@ -5,13 +5,13 @@ namespace FinancialTrackerMVC.Data.Entities
 {
     public class SubscriptionsEntity
     {
-        [Key]
         public int id { get; set; }
         [Required]
         public int amountDue { get; set; }
         [Required]
         public DateTime dueDate { get; set; }
-
+        [Key]
+        public int billId { get; set; }
         public BillsEntity SubDebtor { get; set; }
     }
 }

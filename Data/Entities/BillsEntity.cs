@@ -16,7 +16,6 @@ namespace FinancialTrackerMVC.Data.Entities
         public int id { get; set; }
         public string billType { get; set; }
         public string debtorName { get; set; }
-        public int billId { get; set; }
         public ICollection<SubscriptionsEntity> SubDebtors { get; set; }
 
         // public virtual IEnumerable<CreditCardsEntity> CCDebtors { get; set; }

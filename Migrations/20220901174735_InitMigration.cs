@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinancialTrackerMVC.Migrations
 {
-    public partial class AddingIdentityUserTables : Migration
+    public partial class InitMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,8 +58,8 @@ namespace FinancialTrackerMVC.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    billType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    debtorName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    billType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    debtorName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -187,111 +187,39 @@ namespace FinancialTrackerMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CreditCards",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CCDebtorType = table.Column<int>(type: "int", nullable: false),
-                    payoffAmount = table.Column<int>(type: "int", nullable: false),
-                    amountDue = table.Column<int>(type: "int", nullable: false),
-                    dueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CreditCards", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_CreditCards_Bills_CCDebtorType",
-                        column: x => x.CCDebtorType,
-                        principalTable: "Bills",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MedicalAndInsurance",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MIDebtorType = table.Column<int>(type: "int", nullable: false),
-                    payoffAmount = table.Column<int>(type: "int", nullable: false),
-                    amountDue = table.Column<int>(type: "int", nullable: false),
-                    dueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MedicalAndInsurance", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_MedicalAndInsurance_Bills_MIDebtorType",
-                        column: x => x.MIDebtorType,
-                        principalTable: "Bills",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Misc",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MiscDebtorType = table.Column<int>(type: "int", nullable: false),
-                    amountDue = table.Column<int>(type: "int", nullable: false),
-                    dueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Misc", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Misc_Bills_MiscDebtorType",
-                        column: x => x.MiscDebtorType,
-                        principalTable: "Bills",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RentAndUtilities",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RUDebtorType = table.Column<int>(type: "int", nullable: false),
-                    amountDue = table.Column<int>(type: "int", nullable: false),
-                    dueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RentAndUtilities", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_RentAndUtilities_Bills_RUDebtorType",
-                        column: x => x.RUDebtorType,
-                        principalTable: "Bills",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subscriptions",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubDebtorType = table.Column<int>(type: "int", nullable: false),
+                    billId = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false),
                     amountDue = table.Column<int>(type: "int", nullable: false),
                     dueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscriptions", x => x.id);
+                    table.PrimaryKey("PK_Subscriptions", x => x.billId);
                     table.ForeignKey(
-                        name: "FK_Subscriptions_Bills_SubDebtorType",
-                        column: x => x.SubDebtorType,
+                        name: "FK_Subscriptions_Bills_billId",
+                        column: x => x.billId,
                         principalTable: "Bills",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Bills",
+                columns: new[] { "id", "billType", "debtorName" },
+                values: new object[] { 1, "Subdebtors", "Netflix" });
+
+            migrationBuilder.InsertData(
+                table: "Bills",
+                columns: new[] { "id", "billType", "debtorName" },
+                values: new object[] { 2, "Subdebtors", "Youtube" });
+
+            migrationBuilder.InsertData(
+                table: "Bills",
+                columns: new[] { "id", "billType", "debtorName" },
+                values: new object[] { 3, "Subdebtors", "Hulu" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -331,31 +259,6 @@ namespace FinancialTrackerMVC.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CreditCards_CCDebtorType",
-                table: "CreditCards",
-                column: "CCDebtorType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicalAndInsurance_MIDebtorType",
-                table: "MedicalAndInsurance",
-                column: "MIDebtorType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Misc_MiscDebtorType",
-                table: "Misc",
-                column: "MiscDebtorType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RentAndUtilities_RUDebtorType",
-                table: "RentAndUtilities",
-                column: "RUDebtorType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subscriptions_SubDebtorType",
-                table: "Subscriptions",
-                column: "SubDebtorType");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -374,18 +277,6 @@ namespace FinancialTrackerMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "CreditCards");
-
-            migrationBuilder.DropTable(
-                name: "MedicalAndInsurance");
-
-            migrationBuilder.DropTable(
-                name: "Misc");
-
-            migrationBuilder.DropTable(
-                name: "RentAndUtilities");
 
             migrationBuilder.DropTable(
                 name: "Savings");
