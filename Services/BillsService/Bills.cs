@@ -1,5 +1,4 @@
 using FinancialTrackerMVC.Data;
-// using FinancialTrackerMVC.Data.Entities
 using FinancialTrackerMVC.Models.Bills;
 // using FinancialTrackerMVC.Models.CreditCards;
 // using FinancialTrackerMVC.Models.MedicalAndInsurance;
@@ -64,7 +63,7 @@ namespace FinancialTrackerMVC.Services.BillsService
             .Select(
                 s => new SubscriptionsDetail{
                     id = s.id,
-                    DebtorType = s.SubDebtorType,
+                    DebtorType = s.SubDebtor.ToString(),
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -118,14 +117,14 @@ namespace FinancialTrackerMVC.Services.BillsService
             return bill;
         }
 
-        public async Task<bool> UpdateBill(int id, BillsUpdate request)
+        public async Task<bool> UpdateBill(int id, BillsUpdate model)
         {
-            var bill = await _dbContext.Bills.FindAsync(id);
+            var bill = await _dbContext.Bills.FindAsync(model.id);
             if (bill is null)
             {
                 return false;
             }
-            bill.debtorName = request.debtorName;
+            bill.debtorName = model.debtorName;
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }

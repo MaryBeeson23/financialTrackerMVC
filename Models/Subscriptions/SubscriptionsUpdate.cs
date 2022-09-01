@@ -1,10 +1,14 @@
-using FinancialTrackerMVC.Models.Bills;
+
+
+using FinancialTrackerMVC.Data.Entities;
 
 namespace FinancialTrackerMVC.Models.Subscriptions
 {
     public class SubscriptionsUpdate
     {
-        public int DebtorType { get; set; }
+        public string DebtorType { get; set; }
+        public virtual BillsEntity SubDebtor { get; set; }
+
         public int amountDue { get; set; }
         public DateTime dueDate { get; set; }
     }

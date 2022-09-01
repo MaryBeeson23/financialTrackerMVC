@@ -18,7 +18,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
         {
             var subs = new SubscriptionsEntity
             {
-                SubDebtorType = model.DebtorType,
+                SubDebtor = model.SubDebtor,
                 amountDue = model.amountDue,
                 dueDate = model.dueDate
             };
@@ -33,8 +33,8 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
             .Select(
                 s => new SubscriptionsDetail
                 {
-                    id = s.id,
-                    DebtorType = s.SubDebtorType,
+                    // id = s.id,
+                    SubDebtor = s.SubDebtor,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -50,7 +50,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
                 s => new SubscriptionsDetail
                 {
                     id = s.id,
-                    DebtorType = s.SubDebtorType,
+                    SubDebtor = s.SubDebtor,
                     amountDue = s.amountDue,
                     dueDate = s.dueDate
                 }
@@ -69,7 +69,7 @@ namespace FinancialTrackerMVC.Services.SubscriptionsService
             {
                 return false;
             }
-            subs.SubDebtorType = request.DebtorType;
+            subs.SubDebtor = request.SubDebtor;
             subs.amountDue = request.amountDue;
             subs.dueDate = request.dueDate;
             var numberOfChanges = await _dbContext.SaveChangesAsync();

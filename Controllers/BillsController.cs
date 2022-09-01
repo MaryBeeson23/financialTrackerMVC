@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using FinancialTrackerMVC.Models.Bills;
 using FinancialTrackerMVC.Services.BillsService;
 using FinancialTrackerMVC.Services.SubscriptionsService;
@@ -35,22 +36,25 @@ namespace FinancialTrackerMVC.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var bills = await _billsService.GetAllBills();
+            var subs = await _subService.GetAllSubscriptionsAsync();
 
-            IEnumerable<BillsCreate> model = bills
-                .Select(b => new BillsCreate()
-            {
-                id = b.id,
-                debtorName = b.debtorName
+            IEnumerable<SelectListItem> subBillItem = subs
+                .Select(s => new SelectListItem()
+                {
+                    Text = s.DebtorType,
+                    Value = s.SubDebtor.billType
+                });
 
-            });
+            BillsCreate model = new BillsCreate();
+
+            model.subBill = subBillItem;
 
             return View(model);
         }
     
 
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BillsCreate model)
         {
             if (!ModelState.IsValid)
@@ -59,9 +63,9 @@ namespace FinancialTrackerMVC.Controllers
                 return View(ModelState);
             }
 
-            bool wasReg = await _billsService.CreateBill(model);
+            bool wasAdded = await _billsService.CreateBill(model);
 
-            if (wasReg)
+            if (wasAdded)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -107,7 +111,7 @@ namespace FinancialTrackerMVC.Controllers
 
             if (wasUpdated)
             {
-                return RedirectToAction("Details", new { id = model.debtorName });
+                return RedirectToAction("Details", new { id = model.id });
             }
 
             ViewData["ErrorMsg"] = "Unable to save to the database. Please try again later.";
@@ -129,7 +133,7 @@ namespace FinancialTrackerMVC.Controllers
         // }
 
         [HttpDelete]
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id, BillsDetail model)
         {
             if (await _billsService.DeleteBill(model.id))

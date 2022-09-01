@@ -19,6 +19,11 @@ namespace FinancialTrackerMVC.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            builder.Entity<BillsEntity>()
+            .HasMany<SubscriptionsEntity>(b => b.SubDebtors)
+            .WithOne(s => s.SubDebtor)
+            .HasForeignKey(bs => bs.dueDate);
 
             builder.Entity<BillsEntity>()
             .HasData
